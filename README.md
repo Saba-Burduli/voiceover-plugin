@@ -1,20 +1,39 @@
+<div align="center">
+
+<img src=".claude-plugin/icon.png" alt="Voiceover Studio icon" width="112" height="112">
+
 # Voiceover Studio
 
 **Put your own voice in the demo videos Claude builds.**
 
-![Voiceover Studio: install the plugin, ask Claude for a demo, record each line, and get a video timed to your voice](https://github.com/Saba-Burduli/voiceover-plugin/releases/download/v0.3.3/demo.gif)
+Claude writes the script, a recorder shows you each line to read,<br>
+and every scene of the video is timed to your takes.
 
-<sub>A real Claude Code session, sped up: install → ask for a demo → record → finished video. [Watch the full video with sound](https://github.com/Saba-Burduli/voiceover-plugin/releases/download/v0.3.3/voiceover-studio-demo.mp4).</sub>
+[![Claude Code plugin](https://img.shields.io/badge/Claude_Code-plugin-D97757?logo=claude&logoColor=white)](https://docs.claude.com/en/docs/claude-code/plugins)
+[![Release](https://img.shields.io/github/v/release/Saba-Burduli/voiceover-plugin?color=E0336E)](https://github.com/Saba-Burduli/voiceover-plugin/releases)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+![macOS](https://img.shields.io/badge/macOS-supported-black?logo=apple)
+![Runs locally](https://img.shields.io/badge/data-stays_on_your_Mac-2EA44F)
 
-Claude Code can build a demo video for your project, but the voice is usually a synthetic one, or you record yourself and line up clips by hand. Voiceover Studio closes that gap. You ask for a demo, Claude writes what to say, you read it, and the video is cut to your voice.
+[Install](#install) · [How it works](#how-it-works) · [Recorder keys](#recorder-keys) · [FAQ](#faq) · [Watch the full demo](https://github.com/Saba-Burduli/voiceover-plugin/releases/download/v0.3.3/voiceover-studio-demo.mp4)
 
-## What happens, step by step
+<br>
 
-1. **You ask:** *"Make a demo video of this project. I want to voice it over."*
-2. **Claude plans the video** as scenes and writes one short, easy-to-say line for each scene.
-3. **A recorder opens** in a Terminal window. It shows the line to say, what's on screen at that moment, and the next line.
-4. **You record:** Enter to start, Enter to stop. The take plays back right away. Keep it or redo it.
-5. **You say "done"** in Claude. It reads every take and its length, then builds the video so each scene lasts as long as you spoke.
+<img src="https://github.com/Saba-Burduli/voiceover-plugin/releases/download/v0.3.3/demo.gif" alt="A real Claude Code session: install the plugin, ask for a demo, record each line, get a video timed to your voice" width="820">
+
+<sub>A real Claude Code session, sped up: install → ask for a demo → record → finished video.</sub>
+
+</div>
+
+---
+
+## Why
+
+Claude Code can build a demo video for your project, but the narration is usually a synthetic voice, or you record yourself and line up clips by hand. A demo in the maker's own voice feels different: viewers hear you, and the product sounds like yours.
+
+Voiceover Studio closes that gap in one sentence:
+
+> Make a demo video of this project. I want to voice it over.
 
 You never write a script, run a command, or manage audio files.
 
@@ -26,38 +45,64 @@ Inside Claude Code:
 /plugin install voiceover-studio --marketplace Saba-Burduli/voiceover-plugin
 ```
 
-On Claude Code versions older than 2.1.275, install it in two steps:
+<details>
+<summary>On Claude Code older than 2.1.275, install it in two steps</summary>
 
 ```
 /plugin marketplace add Saba-Burduli/voiceover-plugin
 /plugin install voiceover-studio@voiceover-plugin
 ```
 
-> The plugin is in review for Anthropic's official plugin directory. Until it's listed there, install it from GitHub as shown above.
+</details>
 
-### Requirements
+> [!NOTE]
+> Voiceover Studio is in review for Anthropic's official plugin directory. Until it's listed there, install it from GitHub as shown above.
 
-- **macOS**. The recorder opens in a Terminal window. On Linux, Claude gives you a command to run instead.
-- **Claude Code**: the terminal, an IDE extension, or the desktop app's Code tab.
-- **Node.js 20 or newer**, which runs the plugin.
-- **SoX**, which records audio. If it's missing, Claude notices and offers to install it for you:
-  ```bash
-  brew install sox
-  ```
+**Requirements:** macOS · Claude Code (terminal, IDE extension or the desktop app's Code tab) · Node.js 20+ · [SoX](https://sox.sourceforge.net) for recording. If SoX is missing, Claude notices and offers to install it with `brew install sox`.
 
-## Use it
+## How it works
 
-Ask in plain words:
+<table>
+<tr>
+<td width="33%" valign="top">
 
-> Make a demo video of the onboarding flow. I want to voice it over.
+### 1 · Install & ask
 
-Or run the slash command:
+One command adds the plugin. Ask for a demo you want to narrate, and Claude writes one short, easy-to-say line per scene.
+
+<img src="https://github.com/Saba-Burduli/voiceover-plugin/releases/download/v0.3.3/step-install.gif" alt="Installing the plugin from its marketplace in Claude Code">
+
+</td>
+<td width="33%" valign="top">
+
+### 2 · Talk
+
+A recorder opens with the line to say, what's on screen, and the next line. Record, hear it back, keep it or redo it.
+
+<img src="https://github.com/Saba-Burduli/voiceover-plugin/releases/download/v0.3.3/step-record.gif" alt="The recorder showing a line to read while recording">
+
+</td>
+<td width="33%" valign="top">
+
+### 3 · Done
+
+Say **done** in Claude. It reads every take and builds the video so each scene lasts exactly as long as you spoke.
+
+<img src="https://github.com/Saba-Burduli/voiceover-plugin/releases/download/v0.3.3/step-video.gif" alt="Claude builds the video and it plays back">
+
+</td>
+</tr>
+</table>
+
+You can also start it with the slash command:
 
 ```
 /voiceover-studio:voiceover <what the demo should show>
 ```
 
-A Terminal window opens with your first line:
+## The recorder
+
+A Terminal window opens on your first line:
 
 ```
   Onboarding demo  line 1 of 5
@@ -78,61 +123,94 @@ A Terminal window opens with your first line:
   Next: First, invite your teammates by email.
 ```
 
+### Recorder keys
+
 | Key | What it does |
 | --- | --- |
-| **Enter** | Start recording, then stop. After playback: keep the take |
-| **r** | Redo the take |
-| **p** | Play the take again |
-| **s** | Skip this line for now |
-| **q** | Quit. Progress is saved, and the recorder picks up where you left off |
+| <kbd>Enter</kbd> | Start recording, then stop. After playback: keep the take |
+| <kbd>R</kbd> | Redo the take |
+| <kbd>P</kbd> | Play the take again |
+| <kbd>S</kbd> | Skip this line for now |
+| <kbd>Q</kbd> | Quit. Progress is saved, and the recorder picks up where you left off |
 
-After the last line, go back to Claude and say **done**. If macOS asks whether Terminal can use the microphone, click **Allow**.
+The keys also work on Georgian and Russian keyboard layouts. If macOS asks whether Terminal can use the microphone, click **Allow**.
 
-The keys also work on Georgian and Russian keyboard layouts.
+## Features
+
+- **Lines written for speaking.** Short, plain sentences, each with a cue for what's on screen.
+- **Instant playback.** Every take plays back right away, so you redo only what you don't like.
+- **Scenes timed to your voice.** Each scene lasts as long as its take, plus a short pause. No splitting, no in/out marks.
+- **Change one line, record one line.** Reword a line later and only that line goes back to the recorder.
+- **Resumable.** Progress is saved after every take.
+- **Works with Remotion.** Claude uses [Remotion](https://www.remotion.dev) when your project has it, and ffmpeg otherwise.
+- **Private by design.** No network, no account, no API keys, no telemetry.
 
 ## FAQ
 
-**How is each scene timed to my voice?**
+<details>
+<summary><b>How is each scene timed to my voice?</b></summary>
+
 Every line is its own take, so there's nothing to split or mark by hand. Claude reads each take's length and makes that scene last the same time plus 0.3 to 0.6 seconds of breathing room. Each line's audio sits inside its own scene.
 
-**What if I change a line later?**
+</details>
+
+<details>
+<summary><b>What if I change a line later?</b></summary>
+
 Ask Claude to reword it. Only the changed line goes back to the recorder; every other take stays as it is. If the new take is longer, only that scene gets longer, and the scenes after it start a little later with their audio still in sync.
 
-**What does Claude use to build the video?**
+</details>
+
+<details>
+<summary><b>What does Claude use to build the video?</b></summary>
+
 [Remotion](https://www.remotion.dev) if it's available in your project, with one audio clip per scene. Otherwise it renders the scenes and adds the audio with ffmpeg.
 
-**Does anything leave my machine?**
-No. Recordings, scripts and progress stay in a `.voiceover/` folder in your project. The plugin has no network access, no telemetry, and needs no account or API key.
+</details>
 
-**Does it work on Windows or Linux?**
+<details>
+<summary><b>Does anything leave my machine?</b></summary>
+
+No. Recordings, scripts and progress stay in a `.voiceover/` folder in your project. The plugin makes no network calls. See the [privacy policy](PRIVACY.md).
+
+</details>
+
+<details>
+<summary><b>Does it work on Windows or Linux?</b></summary>
+
 It's built and tested on macOS. On Linux, the recorder doesn't open by itself, but Claude gives you the command to run it with SoX installed. Windows isn't supported yet.
 
-## How it works
+</details>
 
-- **MCP server** with two tools:
-  - `start_voiceover` saves the lines and opens the recorder window.
-  - `get_voiceover_status` returns each kept take's WAV path and duration.
-- **Skill** (`voiceover-demo`) teaches Claude the workflow: plan the scenes, write lines that are easy to say, open the recorder, then time each scene to its take.
-- **Slash command** `/voiceover-studio:voiceover` runs the same workflow on demand.
-- **Files** saved in `.voiceover/` in your project:
-  - `<line-id>.wav`: one file per line
-  - `voiceover.wav`: all lines merged into one track
-  - `manifest.json`: progress and durations
-  - `takes/`: every take, including redos
-- Progress is saved after every take.
+## Under the hood
 
-## What it does on your machine
+| Part | What it does |
+| --- | --- |
+| **MCP server** | `start_voiceover` saves the lines and opens the recorder window. `get_voiceover_status` returns each kept take's WAV path and duration. |
+| **Skill** `voiceover-demo` | Teaches Claude the workflow: plan scenes, write speakable lines, open the recorder, time each scene to its take. |
+| **Command** `/voiceover-studio:voiceover` | Runs the same workflow on demand. |
 
-- **Microphone:** records only between your two Enter presses, using SoX's `rec`. macOS asks once whether Terminal can use the microphone.
-- **Terminal:** `start_voiceover` opens one Terminal window with `osascript` to run the recorder. If a recorder is already open, it reuses that window.
+Files are saved in `.voiceover/` in your project:
+
+```
+.voiceover/
+├── <line-id>.wav      one file per line
+├── voiceover.wav      all lines merged into one track
+├── manifest.json      progress and durations
+└── takes/             every take, including redos
+```
+
+### What it does on your machine
+
+- **Microphone:** records only between your two Enter presses, using SoX's `rec`.
+- **Terminal:** `start_voiceover` opens one Terminal window with `osascript` to run the recorder, and reuses it if one is already open.
 - **Files:** reads and writes only the `.voiceover/` folder in your project. Takes play back with `afplay`.
-- **Network:** none. The plugin sends no audio, text or usage data anywhere and downloads nothing.
+- **Network:** none. No audio, text or usage data is sent anywhere, and nothing is downloaded.
 
-See the full [Privacy policy](PRIVACY.md).
+<details>
+<summary><b>Standalone CLI</b></summary>
 
-## Advanced: CLI
-
-The plugin runs `dist/voiceover.mjs`, which also works as a standalone CLI:
+The plugin runs `dist/voiceover.mjs`, which also works on its own:
 
 ```bash
 node dist/voiceover.mjs record [--dir .voiceover] [--gap 0.4] [--redo <lineId>]
@@ -144,7 +222,10 @@ node dist/voiceover.mjs status
 node dist/voiceover.mjs doctor
 ```
 
-## Development
+</details>
+
+<details>
+<summary><b>Development</b></summary>
 
 ```bash
 npm install
@@ -155,8 +236,16 @@ npm run typecheck && npm run build
 
 `dist/voiceover.mjs` is committed, because plugin installs don't run `npm install`. Rebuild and commit it with every source change.
 
+</details>
+
 ## Feedback
 
-Questions, bugs and ideas are welcome in [GitHub Issues](https://github.com/Saba-Burduli/voiceover-plugin/issues).
+Questions, bugs and ideas are welcome in [GitHub Issues](https://github.com/Saba-Burduli/voiceover-plugin/issues). If Voiceover Studio helped you ship a demo, a ⭐ helps others find it.
 
-Made by [Saba Burduli](https://github.com/Saba-Burduli). MIT licensed.
+<div align="center">
+
+Made by [Saba Burduli](https://github.com/Saba-Burduli) · [MIT License](LICENSE) · [Privacy](PRIVACY.md)
+
+<sub>Claude and Claude Code are trademarks of Anthropic. This is an independent, community-built plugin.</sub>
+
+</div>
